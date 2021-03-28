@@ -1,0 +1,19 @@
+{
+  "name": "htmlform",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@laylazi/bootstrap-rtl": "^4.6.0-1",
+    "@popperjs/core": "^2.9.1",
+    "alertifyjs": "^1.13.1",
+    "jquery": "^3.6.0",
+    "waitme": "^1.19.0"
+  }
+}

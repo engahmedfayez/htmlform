@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مخازن جنوب الدلتا</title>
+
+    <link rel="stylesheet" href="node_modules/@laylazi/bootstrap-rtl/dist/css/bootstrap-rtl.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/waitme/waitMe.min.css">
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.js"></script>
+    <script src="node_modules/@laylazi/bootstrap-rtl/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/waitme/waitMe.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+ 
+ 
+               
+            
+             $('#scd').keyup(()=>{
+
+                if ($('#scd').val().length == 5 ){
+
+                  $('#scdnmdiv').waitMe({effect : 'ios'});
+
+                    var searchField = $('#scd').val();
+                
+                    $.getJSON('stores.json', function (data) {
+
+
+                        let result = data.filter(x => x.scd == searchField);
+
+                        var res = result[0].SNm;
+
+                        $('#scdnm').val(res);
+
+                        $('#scdnmdiv').waitMe("hide");
+
+
+
+
+});
+
+                
+                     
+                     
+                }else{
+
+                    $('#scdnm').val("");
+
+                }
+
+             });
+
+
+
+          
+
+
+});
+
+
+
+
+
+
+
+       
+    </script>
+</head>
+<body>
+
+<div class="container-fluid  border border-dark w-50 mt-5  bg-light py-4 ">
+
+    <h2>
+        <span  class='far fa-bell'></span>
+        الاذون اليومية
+    </h2>
+
+    <hr>
+
+
+    
+
+     <form action="">
+
+
+
+        <div class="form-group">
+
+            <label for="scd">كود المخزن</label>   
+            <a href="#" class="tooltip-test  " title="Tooltip">عرض</a>
+            <input  maxlength="5"  type="text" name="" id="scd"  class="form-control" placeholder="كود المخزن"  >
+
+           
+
+        </div>
+
+        <div class="form-group" id='scdnmdiv'>
+
+            <label for="scdnm">اسم المخزن</label>
+            <input type="text" name="" id="scdnm"  class="form-control "  disabled >
+
+            
+
+        </div>
+
+
+        <div class="form-group ">
+
+            <label for="ty"> نوع الاذن </label>
+                  
+               
+                <select name="" id="ty" class="form-control py-1">
+                    <option value="1" selected >استلام</option>
+                    <option value="2">صرف</option>
+                    <option value="3">تحويل</option>
+                </select>
+            
+
+        </div>
+
+
+        <div class="col-md-12 text-center mt-5 ">
+          <div class="row    ">
+            <a id="btnlogin" type="button" class="btn btn-success    col-5   " href="/permit.html" >عرض</a>
+            <div class="offset-2"></div>
+            <button id="btnreturn" type="button" class="btn btn-danger   col-5   ">رجوع</button>
+          </div>
+
+        </div>
+       
+         
+
+     </form>
+
+
+
+
+</div>
+
+    
+
+
+
+
+
+
+
+ 
+
+
+
+
+</body>
+</html>

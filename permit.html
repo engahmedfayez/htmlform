@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مخازن جنوب الدلتا</title>
+
+    <link rel="stylesheet" href="node_modules/@laylazi/bootstrap-rtl/dist/css/bootstrap-rtl.css">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/waitme/waitMe.min.css">
+    <link rel="stylesheet" href="node_modules/alertifyjs/build/css/alertify.min.css">
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.js"></script>
+    <script src="node_modules/@laylazi/bootstrap-rtl/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/waitme/waitMe.min.js"></script>
+    <script src="node_modules/alertifyjs/build/alertify.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#btn_add_line').click(function (e) {
+                 
+ 
+                $('#itmqty').val('1');
+                $('#itmcd').val('');
+                $('#itmnm').val('');
+                 
+
+                    
+                
+
+            });
+
+
+            $('#myModal').on('shown', function () {
+            $("#itmcd").first().focus();
+             });
+
+            $('#itmcd').keyup(()=>{
+
+if ($('#itmcd').val().length == 9 ){
+
+  $('#itm_name_cd_div').waitMe({effect : 'ios'});
+
+    var searchField = $('#itmcd').val();
+
+    $.getJSON('items.json', function (data) {
+
+
+        let result = data.filter(x => x.ItmCd == searchField);
+
+        try{
+          var res = result[0].ItmNm;
+
+        $('#itmnm').val(res);
+
+        $('#itm_name_cd_div').waitMe("hide"); 
+
+        $('#itmqty').focus();
+        $('#itmqty').select();
+
+      }catch{
+
+        $('#itmnm').val('########صنف غير موجود########');
+
+        $('#itm_name_cd_div').waitMe("hide"); 
+      }
+        
+
+
+
+
+});
+
+
+     
+     
+}else{
+
+    $('#itm_name_cd_div').waitMe("hide");
+    $('#itmnm').val("");
+
+}
+            });
+
+
+          $("#btnprint").click(function () {
+          
+           
+            window.print();
+            
+
+          });
+
+
+          $('#table_body').on("click",".btn-danger",function() {
+
+             var line =  $(this).parent().parent()[0];
+
+             alertify.confirm('حذف', 'هل تود حذف الصنف', 
+             function(){
+              line.remove(); 
+              alertify.error('تم الحذف بنجاح').delay(0.8);} , 
+             function(){}
+             );
+ 
+
+          
+            
+          });
+
+          $('#btn_add_line_detials').click(()=>{
+
+
+            var itmcd = $('#itmcd').val();
+            var itmnm = $('#itmnm').val();
+            var itmqty = $('#itmqty').val();
+
+            $('#table_body').append(`
+            <tr>
+            <td>4</td>
+            <td>${itmcd}</td>
+            <td>${itmnm}</td>
+            <td>عدد</td>
+            <td>${itmqty}</td>
+            <td> <button type="button" class="btn btn-danger btn-sm"> <span class="fas fa-trash-alt  "></span> حذف</button> </td>
+          </tr>`);
+
+         
+
+          });
+
+
+
+
+
+
+
+        });
+    </script>
+   
+</head>
+<body>
+
+    <div class="container">
+
+    <div class="container-fluid bg-light row pt-1   "  >
+
+        <div class="form-group  col-md-2  mb-0">
+    
+            <label for="scd">كود المخزن</label>   
+            <input   type="text" name="" id="scd"  class="form-control" value="00203" disabled  >
+                       
+        </div>
+
+        <div class="form-group  col-md-4  mb-0">
+    
+            <label for="snm">اسم المخزن</label>   
+            <input   type="text" name="" id="snm"  class="form-control" value="ميت حبيش 2 قطع غيار" disabled  >
+                       
+        </div>
+
+        <div class="form-group  col-md-2  mb-0">
+    
+            <label for="ty"> نوع الاذن  </label>   
+            <input   type="text" name="" id="ty"  class="form-control bg-success text-white" value="استلام" disabled  >
+                       
+        </div>
+
+        <div class="form-group  col-md-2  mb-0 offset-2">
+               
+          <a  id="btnexit" type="button" class="btn btn-danger  " href="/permitselect.html"> 
+            <span class="fas fa-times-circle"></span>
+            خروج</a>
+      </div>
+        
+
+
+    </div>
+
+    <div class="container-fluid bg-light row py-0">
+
+
+
+        <div class="form-group  col-md-2  mb-0 ">
+    
+            <label for="tno">رقم الاذن </label>   
+            <input   type="text" name="" id="tno"  class="form-control" value="00203"   >
+                       
+        </div>
+
+        <div class="form-group  col-md-4  mb-0 ">
+    
+            <label for="dt"> تاريخ الاذن  </label>   
+            <input   type="date" name="" id="dt"  class="form-control" value="2020-09-05"   >
+                       
+        </div>
+
+        <div class="form-group  col-md-2   mb-0">
+    
+            <label for="pno">    الرقم المطبوع  </label>   
+            <input   type="text" name="" id="pno"  class="form-control  " value="2058"   >
+                       
+        </div>
+        
+
+
+    </div>
+
+
+    <div class="container-fluid bg-light row py-0">
+
+
+
+        <div class="form-group  col-md-2 ">
+    
+            <label for="tno">توريد بموجب </label>   
+            <select name="" id="ty" class="form-control">
+                <option value="1">صيانة</option>
+                <option value="2">مشروعات شركة</option>
+                <option value="3">مشروعات غير</option>
+                <option value="4">توصيلات مشتركين</option>
+                <option value="5">أعطال</option>
+                <option value="6">مشروعات شركة-طموحة</option>
+                <option value="7">تتطوير</option>
+                <option value="8">متنوعة</option>
+                <option value="9">شركات شقيقة</option>
+                <option value="17">ملاحظات تفتيش فنى</option>
+                <option value="20">مرتجع الخطة الطموحة</option>
+                <option value="30">شركات كابلات</option>
+            </select>
+                       
+        </div>
+
+        <div class="form-group  col-md-4 ">
+    
+            <label for="dt"> الرقم  </label>   
+            <input   type="text" name="" id="dt"  class="form-control" value="1566565"   >
+                       
+        </div>
+
+        <div class="form-group  col-md-2 ">
+    
+            <label for="pno">    السنة </label>   
+            <input   type="text" name="" id="pno"  class="form-control  " value="2020"   >
+                       
+        </div>
+
+        <div class="form-group  col-md-4 ">
+         
+        <button  id="btnprint" type="button" class="btn btn-success btn-block h-100 text-lg-center"> <span class="fas fa-print px-2"></span>طباعة الاذن</button>
+        </div>
+
+
+    </div>
+
+
+<div class="container-fluid py-2">
+
+    <button type="button" id="btn_add_line" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      <span class="fas fa-plus px-1"></span> 
+      اضافة سطر جديد
+              </button>
+</div>
+
+
+ <div class="  container-fluid">
+
+    <table class="table table-striped  border">
+        <thead>
+          <tr>
+            <th>م</th>
+            <th>كود الصنف</th>
+            <th>اسم الصنف</th>
+            <th>الوحدة</th>
+            <th>الكمية</th>
+            <th>....</th>
+          </tr>
+        </thead>
+        <tbody  id="table_body">
+          <tr>
+            <td>1</td>
+            <td>010302004</td>
+            <td>كابل لو 3×50+25 مم2 جهد منخفض غير مسلـح</td>
+            <td>عدد</td>
+            <td>10</td>
+            <td> <button type="button" class="btn btn-danger btn-sm "> <span class="fas fa-trash-alt  "></span> حذف</button> </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>010303001</td>
+            <td> كابل نح 3×35+16 مم2 جهد منخفض</td>
+            <td>عدد</td>
+            <td>2</td>
+            <td> <button type="button" class="btn btn-danger btn-sm "> <span class="fas fa-trash-alt  "></span> حذف</button> </td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>010304006</td>
+            <td>سرفيل لو لكابل 95  مم2 هوائى</td>
+            <td>عدد</td>
+            <td>7</td>
+            <td> <button type="button" class="btn btn-danger btn-sm "> <span class="fas fa-trash-alt  "></span> حذف</button> </td>
+          </tr>
+
+        
+        
+        </tbody>
+      </table>
+
+
+ 
+ 
+    </div>
+
+
+</div>
+
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">اضافة صنف جديد</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body ">
+        
+            <div class="container-fluid "></div>
+            <div class="form-group col-6">
+    
+                <label for="itmcd">كود الصنف</label>   
+                <input     maxlength="9" type="text" name="" id="itmcd"  class="form-control"   >
+                           
+            </div>
+    
+            <div class="form-group " id="itm_name_cd_div">
+        
+                <label for="itmnm">اسم الصنف</label>   
+                <input   type="text" name="" id="itmnm"  class="form-control"   disabled  >
+                           
+            </div>
+
+
+            <div class="row">
+
+                <div class="form-group col-6">
+    
+                    <label for="scd">الكمية</label>   
+                    <input   type="number" name="" id="itmqty"  class="form-control"  value="1" min="1"  maxlength="9" >
+                               
+                </div>
+                <div class="form-group col-6">
+    
+                    <label for="scd">الرصيد </label>   
+                    <input   type="text" name="" id="scd"  class="form-control"   disabled >
+                               
+                </div>
+
+            </div>
+
+
+
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer ">
+
+           
+         <button  id="btn_add_line_detials" type="button" class="btn btn-success  " data-dismiss="modal">حفظ</button>
+        
+          <button type="button" class="btn btn-danger  " data-dismiss="modal">اغلاق</button>
+        
+          
+        
+        
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</body>
