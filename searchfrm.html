@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="node_modules/@laylazi/bootstrap-rtl/dist/css/bootstrap-rtl.css"
+    />
+    <link
+      rel="stylesheet"
+      href="node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="node_modules/waitme/waitMe.min.css" />
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.js"></script>
+    <script src="node_modules/@laylazi/bootstrap-rtl/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/waitme/waitMe.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#txt1").keyup(() => {
+          if ($("#txt1").val().length > 0) {
+            $("#result").html("");
+
+            var searchField = $("#txt1").val();
+            let express = new RegExp(searchField, "i");
+
+            $.getJSON("stores.json", function (data) {
+              $.each(data, function (index, value) {
+                if (value.SNm.search(express) != -1  ||  value.scd.search(express) != -1  ) {
+                  $("#result").append(
+                    `<a href="#" class="list-group-item list-group-item-action"  data-custom-value="${value.scd}" >${value.SNm}</a>`
+                  );
+                }
+              });
+            });
+          } else {
+            $("#result").html("");
+          }
+        });
+
+        $("#result").on('click', ".list-group-item", function () {
+            
+          $(this).click(function () {
+            var value = $(this).data("custom-value");
+           // console.log(value);
+           $("#result").html("");
+           $("#txt1").val(value);
+
+          });
+        });
+     
+    
+    
+    });
+    </script>
+  </head>
+  <body>
+    <div class="container w-50 bg-light">
+      <div class="form-group">
+        <label class="" for="txt1">البحث</label>
+        <input class="form-control" type="text" name="" id="txt1" />
+
+        <div class="list-group" id="result"></div>
+      </div>
+    </div>
+  </body>
+</html>
